@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
-
+import One from "./components/One";
+import Student from "./components/Student";
 function App() {
+  const students = [
+    {
+      name: "Kyaw Kyaw",
+      address: "ygn",
+    },
+    {
+      name: "Mg MG",
+      address: "sagaing",
+    },
+    {
+      name: "Aung Aung",
+      address: "mdy",
+    },
+  ];
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>My First React Project</h1>
+      <One
+        data={{ name: "Htoo Aung Lin", address: "California" }}
+        height={183}
+      />
+      {/* <Student students={students}/> */}
+      <Student
+        name={students[0].name.toUpperCase()}
+        address={students[0].address}
+      />
+      <Student
+        name={students[1].name}
+        address={students[1].address}
+      />
+      <Student
+        name={students[2].name}
+        address={students[2].address}
+      />
     </div>
   );
 }
