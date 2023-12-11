@@ -1,40 +1,31 @@
-import One from "./components/One";
-import Student from "./components/Student";
+import Student from "./components/One/Student";
+import './components/One/mine.css'
+import Form from "./components/One/Form";
+import { useState } from "react";
+
 function App() {
-  const students = [
-    {
-      name: "Kyaw Kyaw",
-      address: "ygn",
-    },
-    {
-      name: "Mg MG",
-      address: "sagaing",
-    },
-    {
-      name: "Aung Aung",
-      address: "mdy",
-    },
-  ];
+
+  const [students, setStudents] = useState([]);
+
+  const addNewMember = (memInfo) => {
+   setStudents((prevStudents) => [...prevStudents, memInfo]);
+  }
+
+  let content = <p>No member yet!</p>
+  if(students.length > 0) {
+       content = students.map((student)=> (
+                  <Student
+                    name={student.name}
+                    address={student.address}
+                    key={student.name}
+                  />
+       ));
+  }
+
   return (
     <div className="App">
-      <h1>My First React Project</h1>
-      <One
-        data={{ name: "Htoo Aung Lin", address: "California" }}
-        height={183}
-      />
-      {/* <Student students={students}/> */}
-      <Student
-        name={students[0].name.toUpperCase()}
-        address={students[0].address}
-      />
-      <Student
-        name={students[1].name}
-        address={students[1].address}
-      />
-      <Student
-        name={students[2].name}
-        address={students[2].address}
-      />
+      {content}
+      <Form addNewMember={addNewMember}/>
     </div>
   );
 }
