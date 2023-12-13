@@ -18,6 +18,7 @@ code {
   box-shadow: 20px 20px 12px 7px rgba(0,0,0,0.61);
   width: 450px;
   margin: 0 auto;
+  padding: 20px;
 }
 
 form {

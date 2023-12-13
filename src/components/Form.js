@@ -1,27 +1,34 @@
-import { useState } from "react";
+import { useRef } from "react";
 import Card from "./Card";
 
 const Form = (props) => {
-  const [name,setName] = useState("");
-  const [address,setAddress] = useState("");
-  const [email,setEmail] = useState("");
+  // const [name,setName] = useState("");
+  // const [address,setAddress] = useState("");
+  // const [email,setEmail] = useState("");
+
+  const nameInputRef = useRef();
+  const addressInputRef = useRef();
+  const emailInputRef = useRef();
   
   const addUser = (e) => {
     e.preventDefault();
     if (
-      name.trim().length === 0 ||
-      address.trim().length === 0 ||
-      email.trim().length === 0
+      nameInputRef.current.value.trim().length === 0 ||
+      addressInputRef.current.value.trim().length === 0 ||
+      emailInputRef.current.value.trim().length === 0
     ) {
       window.confirm("Please fill all the neccessary fields");
     } else {
       const userInfo = {
-        name,
-        address,
-        email,
-      }
+        name: nameInputRef.current.value,
+        address: addressInputRef.current.value,
+        email: emailInputRef.current.value,
+      };
       props.getUserInfo(userInfo);
+
+      nameInputRef.current.value = emailInputRef.current.value = addressInputRef.current.value = ""
     }
+
       
   }
   return (
@@ -32,7 +39,8 @@ const Form = (props) => {
           <input
             type="text"
             id="name"
-            onChange={(e) => setName(e.target.value)}
+            // value={nameInputRef.current.value}
+            ref={nameInputRef}
           />
         </div>
         <div className="form-div">
@@ -40,7 +48,8 @@ const Form = (props) => {
           <input
             type="text"
             id="address"
-            onChange={(e) => setAddress(e.target.value)}
+            ref={addressInputRef}
+            // value={addressInputRef.current.value}
           />
         </div>
         <div className="form-div">
@@ -48,7 +57,8 @@ const Form = (props) => {
           <input
             type="email"
             id="email"
-            onChange={(e) => setEmail(e.target.value)}
+            ref={emailInputRef}
+            // value={emailInputRef.current.value}
           />
         </div>
         <div className="form-div">
