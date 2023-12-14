@@ -1,44 +1,47 @@
-import { useState } from "react";
-import List from "./components/List";
-import Form from "./components/Form";
-import Card from "./components/Card";
-import Count from "./components/Count";
+import { useEffect, useReducer } from "react";
+
+const ACTION = {
+      INCREMENT: "increment",
+      DECREMENT: "decrement",
+      UPDATE_KEY: "update key"
+  }
+
+const reducer = (state,action) => {
+  switch(action.type) {
+    case ACTION.DECREMENT:
+      return {...state, count: state.count - 1}
+    case ACTION.INCREMENT:
+      return {...state, count: state.count + 1}
+    case ACTION.UPDATE_KEY:
+      return {...state, key: action.key}
+    default:
+      return state;
+  }
+}
 
 function App() {
 
-  // const [students, setStudents] = useState([]);
+  useEffect(()=>{
+    console.log("I am useEffect hook");
+  },[])
 
-  // const addNewMember = (memInfo) => {
-  //  setStudents((prevStudents) => [...prevStudents, memInfo]);
-  // }
-
-  // let content = <p>No member yet!</p>
-  // if(students.length > 0) {
-  //      content = students.map((student)=> (
-  //                 <Student
-  //                   name={student.name}
-  //                   address={student.address}
-  //                   key={student.name}
-  //                 />
-  //      ));
-  // }
- const [userInfo,setUserInfo] = useState([]);
-
- const getUserInfo = userInfoObj => {
-  setUserInfo((prevUserInfo) => [...prevUserInfo, userInfoObj]);
- }
+  const [state,dispatch] = useReducer(reducer,{key: "", count: 0})
+  
   return (
     <div className="App">
-      <Form getUserInfo={getUserInfo}/>
-      {userInfo.length > 0 ? (
-        userInfo.map((user,index) => (
-          <List key={index} userInfo={user}/>
-        ))
-        
-      ) : (<Card css="mt-top">No user info yet</Card>)}
+      <input
+        type="text"
+        onChange={(e) =>
+          dispatch({ type: ACTION.UPDATE_KEY, key: e.target.value })
+        }
+      />
+      <p>Your key is {state.key}</p>
 
-      <Count/>
-      
+      <div className="counter">
+        <button onClick={() => dispatch({ type: ACTION.DECREMENT })}>-</button>
+        <span>{state.count}</span>
+        <button onClick={() => dispatch({ type: ACTION.INCREMENT })}>+</button>
+      </div>
     </div>
   );
 }
